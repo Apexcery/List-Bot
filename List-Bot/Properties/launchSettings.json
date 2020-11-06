@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "List-Bot": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "prefix2": "!l ",
+        "prefix": "!list ",
+        "token": "Nzc0NDEzMTUxMjEwMTc2NTUz.X6Xacw.W7_GL08UU-IBQx2tS4H5aRpJsjs"
+      }
+    }
+  }
+}
