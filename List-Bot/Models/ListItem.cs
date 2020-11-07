@@ -11,5 +11,7 @@ namespace List_Bot.Models
         public Guid Id { get; set; }
         public string Value { get; set; }
         public DateTime CreatedDate { get; set; }
+
+        public virtual List List { get; set; }
     }
 }

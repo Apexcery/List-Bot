@@ -101,6 +101,12 @@ namespace List_Bot.Commands
             }
 
             var items = list.Items;
+
+            if (!items.Any())
+            {
+                await ReplyAsync("There are no items currently saved to this list.");
+                return;
+            }
             
             var embed = new EmbedBuilder()
                 .WithTitle(list.Name)

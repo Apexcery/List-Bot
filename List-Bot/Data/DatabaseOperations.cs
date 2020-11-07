@@ -50,6 +50,10 @@ namespace List_Bot.Data
                 return false;
 
             _context.Lists.Remove(list);
+            foreach (var listItem in list.Items)
+            {
+                _context.ListItems.Remove(listItem);
+            }
             var entitiesUpdated = await _context.SaveChangesAsync();
 
             return entitiesUpdated > 0;
@@ -67,7 +71,6 @@ namespace List_Bot.Data
             updatedList.Items.Add(item);
             updatedList.UpdatedDate = DateTime.UtcNow;
 
-            _context.Lists.Update(updatedList);
             var entitiesUpdated = await _context.SaveChangesAsync();
 
             return entitiesUpdated > 0;
@@ -83,6 +86,7 @@ namespace List_Bot.Data
             updatedList.UpdatedDate = DateTime.UtcNow;
 
             _context.Lists.Update(updatedList);
+            _context.ListItems.Remove(item);
             var entitiesUpdated = await _context.SaveChangesAsync();
 
             return entitiesUpdated > 0;
