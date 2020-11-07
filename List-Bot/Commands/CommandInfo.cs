@@ -9,7 +9,7 @@ using List_Bot.Services;
 
 namespace List_Bot.Commands
 {
-    public class Info : ModuleBase<SocketCommandContext>
+    public class CommandInfo : ModuleBase<SocketCommandContext>
     {
         [Command("help")]
         public async Task Help()
@@ -23,6 +23,7 @@ namespace List_Bot.Commands
                 .AddField("Remove from List", $"{prefix}remove <name> <item>\nRemove the specified item from the specified list.")
                 .AddField("View List", $"{prefix}view <name>\nView the entire list.")
                 .AddField("Delete List", $"{prefix}delete <name>\nDelete the specified list.")
+                .AddField("View all Lists", $"{prefix}viewall\nView all created lists.")
                 .WithColor(Colors.GetRandomDiscordColor())
                 .Build();
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using Discord;
@@ -6,6 +7,7 @@ using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
+using List_Bot.Data;
 
 namespace List_Bot
 {
@@ -20,6 +22,12 @@ namespace List_Bot
 
         public async Task MainAsync()
         {
+            if (!Directory.Exists("./appdata"))
+            {
+                Console.WriteLine("'appdata' directory does not exist.");
+                return;
+            }
+
             _client = new DiscordSocketClient();
             _client.Log += Log;
 
@@ -28,16 +36,27 @@ namespace List_Bot
             _services = new ServiceCollection()
                 .AddSingleton(_client)
                 .AddSingleton(_commands)
+                .AddScoped<IDatabaseOperations, DatabaseOperations>()
+                .AddEntityFrameworkSqlite()
+                .AddDbContext<DatabaseContext>()
                 .BuildServiceProvider();
 
-            var token = Environment.GetEnvironmentVariable("token");
+            await CreateDatabase();
 
             await RegisterCommandsAsync();
 
+            var token = Environment.GetEnvironmentVariable("token");
             await _client.LoginAsync(TokenType.Bot, token);
             await _client.StartAsync();
 
             await Task.Delay(-1);
+        }
+
+        private async Task CreateDatabase()
+        {
+            await using var client = new DatabaseContext();
+            await client.Database.EnsureDeletedAsync();
+            await client.Database.EnsureCreatedAsync();
         }
 
         private Task Log(LogMessage msg)
