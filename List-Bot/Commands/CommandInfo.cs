@@ -18,11 +18,12 @@ namespace List_Bot.Commands
 
             var embed = new EmbedBuilder()
                 .WithTitle("Usage")
-                .AddField("Create List", $"{prefix}create <name>\nCreate a new list with the specified name.")
-                .AddField("Add to List", $"{prefix}add <name> <item>\nAdd a new item to the specified list.")
-                .AddField("Remove from List", $"{prefix}remove <name> <item>\nRemove the specified item from the specified list.")
-                .AddField("View List", $"{prefix}view <name>\nView the entire list.")
-                .AddField("Delete List", $"{prefix}delete <name>\nDelete the specified list.")
+                .AddField("Create List", $"{prefix}create <list name>\nCreate a new list with the specified name.")
+                .AddField("Add to List", $"{prefix}add <list name> <item>\nAdd a new item to the specified list.")
+                .AddField("Pick Random from List", $"{prefix}random <list name>")
+                .AddField("Remove from List", $"{prefix}remove <list name> <item>\nRemove the specified item from the specified list.")
+                .AddField("View List", $"{prefix}view <list name>\nView the entire list.")
+                .AddField("Delete List", $"{prefix}delete <list name>\nDelete the specified list.")
                 .AddField("View all Lists", $"{prefix}viewall\nView all created lists.")
                 .WithColor(Colors.GetRandomDiscordColor())
                 .Build();

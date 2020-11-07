@@ -51,7 +51,7 @@ namespace List_Bot.Commands
         }
 
         [Command("remove")]
-        public async Task RemoveFromList(string listName, string itemName)
+        public async Task RemoveFromList(string listName, [Remainder]string itemName)
         {
             if (string.IsNullOrEmpty(listName) || string.IsNullOrEmpty(itemName))
             {
@@ -115,6 +115,43 @@ namespace List_Bot.Commands
                 .WithColor(Colors.GetRandomDiscordColor());
 
             await Context.Channel.SendMessageAsync("", false, embed.Build());
+        }
+
+        [Command("random")]
+        public async Task RandomListItem(string listName)
+        {
+            if (string.IsNullOrEmpty(listName))
+            {
+                await ReplyAsync("You need to specify a list to pick from.");
+                return;
+            }
+
+            var list = await _dbOperations.FindByName(listName);
+            if (list == null)
+            {
+                await ReplyAsync("A list could not be found with that name.");
+                return;
+            }
+
+            var items = list.Items;
+            if (!items.Any())
+            {
+                await ReplyAsync("There are no items saved to this list.");
+                return;
+            }
+
+
+            var rnd = new Random();
+            var randomItem = items[rnd.Next(items.Count)];
+
+            var embed = new EmbedBuilder()
+                .WithTitle($"'{list.Name}'")
+                .WithDescription(list.Description)
+                .AddField("Random Item", randomItem.Value)
+                .WithColor(Colors.GetRandomDiscordColor())
+                .Build();
+
+            await Context.Channel.SendMessageAsync("", false, embed);
         }
     }
 }
