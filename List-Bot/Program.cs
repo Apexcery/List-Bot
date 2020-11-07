@@ -49,7 +49,6 @@ namespace List_Bot
         private async Task CreateDatabase()
         {
             await using var client = new DatabaseContext();
-            await client.Database.EnsureDeletedAsync();
             await client.Database.EnsureCreatedAsync();
         }
 
