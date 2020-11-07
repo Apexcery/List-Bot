@@ -22,6 +22,12 @@ namespace List_Bot
 
         public async Task MainAsync()
         {
+            if (!Directory.Exists("./appdata") && !Directory.Exists("../appdata"))
+            {
+                Console.WriteLine("'appdata' directory could not be found.");
+                return;
+            }
+
             _client = new DiscordSocketClient();
             _client.Log += Log;
 

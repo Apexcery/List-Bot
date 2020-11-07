@@ -1,4 +1,5 @@
-﻿using List_Bot.Models;
+﻿using System;
+using List_Bot.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace List_Bot.Data
@@ -10,7 +11,11 @@ namespace List_Bot.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Filename=ListDatabase.db");
+            #if DEBUG
+                optionsBuilder.UseSqlite("Data Source=./appdata/ListDatabase.db");
+            #else
+                optionsBuilder.UseSqlite("Data Source=../appdata/ListDatabase.db");
+            #endif
         }
     }
 }
