@@ -12,10 +12,12 @@ namespace List_Bot.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             #if DEBUG
+                Console.WriteLine($"Using './appdata/ListDatabase.db'");
                 optionsBuilder.UseSqlite("Data Source=./appdata/ListDatabase.db");
-            #else
+#else
+                Console.WriteLine($"Using '../appdata/ListDatabase.db'");
                 optionsBuilder.UseSqlite("Data Source=../appdata/ListDatabase.db");
-            #endif
+#endif
         }
     }
 }
